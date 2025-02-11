@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korea.news.mapper.CommentMapper">
+
+    <!-- 댓글 삽입 -->
+    <insert id="insert" parameterType="com.korea.news.vo.DaegulVO">
+    INSERT INTO daegul (num, userid, id, content, ip, regdate, ref, step, depth) 
+    VALUES (seq_daegul_number.NEXTVAL, #{userid}, #{id}, #{content}, #{ip}, SYSDATE, seq_daegul_number.currVal, 0, 0)
+	</insert>
+
+	<!-- 특정 뉴스 ID에 대한 모든 댓글 조회 -->
+    <select id="findCommentsByNewsId" parameterType="String" resultType="com.korea.news.vo.DaegulVO">
+        SELECT num, userid, id, content, ip, regdate, ref, step, depth
+        FROM daegul
+        WHERE id = #{newsId}
+        ORDER BY regdate DESC
+    </select>
+
+ <!-- 부모 댓글 정보 조회 -->
+    <select id="selectOne" parameterType="int" resultType="com.korea.news.vo.DaegulVO">
+        SELECT num, userid, id, content, ip, regdate, ref, step, depth
+        FROM daegul
+        WHERE num = #{num}
+    </select>
+
+    <!-- 부모 댓글의 step 업데이트 -->
+    <update id="update_step" parameterType="com.korea.news.vo.DaegulVO">
+        UPDATE daegul
+        SET step = step + 1
+        WHERE ref = #{ref} AND step > #{step}
+    </update>
+
+    <!-- 대댓글 삽입 -->
+    <insert id="reply" parameterType="com.korea.news.vo.DaegulVO">
+        INSERT INTO daegul (num, userid, id, content, ip, regdate, ref, step, depth) 
+        VALUES (seq_daegul_number.NEXTVAL, #{userid}, #{id}, #{content}, #{ip}, SYSDATE, #{ref}, #{step}, #{depth})
+    </insert>
+
+	<!-- 댓글 삭제 쿼리 -->
+    <delete id="delete" parameterType="int">
+        DELETE FROM daegul
+        WHERE num = #{num}
+    </delete>
+
+	<!-- 댓글 업데이트 -->
+    <update id="updateComment" parameterType="com.korea.news.vo.DaegulVO">
+        UPDATE daegul
+        SET content = #{content}
+        WHERE num = #{num}
+    </update>
+</mapper>

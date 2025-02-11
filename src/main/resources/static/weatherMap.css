@@ -1,0 +1,135 @@
+#map_object{
+	position: absolute;
+	padding: 35px 0;
+}
+.nation_map {
+    background-position: -295px 0;
+    background-repeat: no-repeat;
+    width: 293px;
+    height: 361px;
+	position: relative;
+    margin: 0 auto;
+}
+
+.zone{
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+.blind{
+	display: none;
+}
+
+a.z17 {/*제주*/
+	top: 635px;
+	left: -45px;
+}
+
+a.z13 { /*안동*/
+	top: 220px;
+	left: 150px;
+}
+
+
+a.z3 { /*수원*/
+	top: 190px;
+	left: -20px;
+
+}
+
+a.z16 { /*부산*/
+	top: 410px;
+	left: 200px;
+
+}
+
+a.z8 {/*전주*/
+	top: 309px;
+	left: 0px;
+
+}
+
+a.z15 { /*울산*/
+	top: 357px;
+	left: 250px;
+
+}
+
+a.z9 {/*광주*/
+	top: 436px;
+	left: -10px;
+
+}
+
+
+a.z7 {
+	top: 253px;
+	left: 0px;
+
+}
+
+
+a.z1 { /*서울*/
+	top: 130px;
+	left: -20px;
+
+}
+
+
+
+a.z4 {/*춘천*/
+	top: 40px;
+	left: 70px;
+
+}
+
+
+a.z11 {/*여수*/
+	top: 435px;
+	left: 80px;
+
+}
+
+
+a.z6 {/*청주*/
+	top: 148px;
+	 left: 110px;
+
+}
+
+a.z10 {/*목포*/
+	top: 536px;
+	left: -60px;
+
+}
+
+a.z2 {
+	top: 159px;
+	left: -130px;
+
+}
+
+a.z5 {/*강릉*/
+	top: 148px;
+	left: 200px;
+
+}
+
+a.z14 { /*대구*/
+	top: 337px;
+	left: 150px;
+
+}
+
+
+.zone {
+    position: absolute;
+    min-width: 64px;
+    padding-top: 22px;
+    text-align: center;
+}
+
+
+
+

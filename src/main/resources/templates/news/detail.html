@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>YKP</title>
+    <link rel="stylesheet" th:href="@{/home-header.css}">
+    <link rel="stylesheet" th:href="@{/detail.css}">
+</head>
+<body>
+    <div th:replace="~{header::headerFragment}"></div>
+
+    <!-- 상세뉴스 -->
+    <div class="container">
+        <!-- 왼쪽박스 -->
+        <div class="detail-box-left">
+            <!-- 위쪽박스 -->
+            <div class="detail-top">
+                <p th:text="${news.publisher}">출판사</p>
+                <hr class="detail-line">
+                <h1 th:text="${news.title}">제목</h1>
+                <p th:text="${news.author}">저자</p>
+                <p th:text="${#dates.format(news.publishedAt, 'yyyy-MM-dd HH:mm')}">발행일</p>
+                <img th:src="${news.imageUrl}" alt="이미지">
+                <a th:text="${news.summary}" class="detail-summary">요약</a>
+                
+                <!-- 텍스트 크기 조절 버튼 -->
+                <div class="text-controls">
+                    <button id="size-font" class="btn-control">A</button>
+                    <a th:href="${news.contentUrl}" title="기사원문" class="btn-link">
+                        <img src="/img/link-green.png" >
+                    </a>                  
+                </div>
+            </div>
+             
+            <!-- 댓글박스 -->
+            <div class="comments-section">
+			
+			    <!-- 댓글 목록 -->
+			<div th:each="comment : ${comments}" th:data-comment-num="${comment.num}" class="daegul">
+			
+			    <!-- 기본 댓글 -->
+			    <div th:if="${comment.depth == 0}" class="comment">
+			        <div class="comment-header">
+			            <span class="comment-author" th:text="${comment.userid}">작성자</span>
+			            <span class="comment-date" th:text="${#dates.format(comment.regdate, 'yyyy-MM-dd HH:mm')}">작성일자</span>
+			        	
+			        	
+			        			        
+			        </div>
+			        <div class="comment-content" th:text="${comment.content}">댓글 내용</div>
+			        <div class="comment-actions">
+			            <button class="reply-button" onclick="toggleReplyForm(this)">답글</button>
+			            
+			            <!-- 점 3개 버튼 -->
+				        <div th:if="${userId == comment.userid}" class="comment-options">
+						    <button class="options-button">⋮</button>
+						    <div class="options-menu" style="display: none;">
+						        <button class="edit-button">수정</button>
+						        <button class="delete-button">삭제</button>
+						    </div>
+						</div>
+				  </div>
+				
+			        <!-- 대댓글 -->
+				<div class="reply-form" style="display: none;">
+				
+				    <!-- 대댓글 목록 -->
+			        <div class="replies">
+			            <div th:each="reply : ${comments}" th:if="${reply.ref == comment.num} and ${reply.depth > 0}" class="reply" th:data-comment-num="${reply.num}">
+			                <div class="comment-header">
+			                    <span class="comment-author" th:text="${reply.userid}">작성자</span>
+			                    <span class="comment-date" th:text="${#dates.format(reply.regdate, 'yyyy-MM-dd HH:mm')}">작성일자</span>
+			                </div>
+			               <div class="comment-actions">
+			                <div class="comment-content" th:text="${reply.content}">대댓글 내용</div>
+			                <!-- 점 3개 버튼 -->
+				        <div th:if="${userId == comment.userid}" class="comment-options">
+						    <button class="options-button">⋮</button>
+						    <div class="options-menu" style="display: none;">
+						        <button class="edit-button">수정</button>
+						        <button class="delete-button">삭제</button>
+						    </div>
+						</div>
+				        </div>
+			            </div>
+			        </div>
+			        
+        			<!-- 대댓글 작성 폼 (초기에는 숨겨져 있음) -->
+				    <form th:action="@{'/news/' + ${news.id} + '/reply'}" method="post">
+				        <textarea name="content" class="form-control" rows="3" required placeholder="댓글을 입력해주세요"></textarea>
+				        <input type="hidden" name="num" th:value="${comment.num}"> <!-- 부모 댓글의 번호 -->
+				        <input type="hidden" name="depth" value="1">
+				        <input type="hidden" name="ref" th:value="${comment.ref}"> <!-- 부모 댓글의 참조(ref) 번호 -->
+				        <button class="btn-primary reply-submit-btn" type="submit">등록</button>
+				    </form>
+				</div>
+
+			    </div>
+			</div>
+
+			    
+			
+			    <!-- 댓글 작성 폼 -->
+			    <div class="comment-form">
+			        <form id="commentForm" th:action="@{'/news/' + ${news.id} + '/comment'}" method="post">
+			            <div class="form-group">
+			                <textarea id="content" name="content" class="form-control" rows="4" required placeholder="댓글을 입력해주세요"></textarea>
+			            </div>
+			            <button id="commentSubmitBtn" class="btn-primary">등록</button>
+			        </form>
+			    </div>
+			</div>
+
+
+            
+       
+       
+        </div>
+
+        <!--오른쪽 박스 -->
+        <div class="detail-box-right">
+            <p>관련 뉴스</p>
+            <hr class="detail-line">
+            <div th:each="related, iterStat : ${relatedNews}" class="small-box">
+                <div class="small-box-img">
+                    <img th:src="${related.imageUrl}" alt="이미지">
+                </div>
+                <div class="box-text">
+                    <h2 onclick="saveNews(this)" th:attr="data-id=${related.id}" th:text="${related.title.length() > 50 ? related.title.substring(0, 50) + '...' : related.title}">제목</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script th:inline="javascript">
+    let $content = $(".detail-summary"); // 글자 크기를 조정할 영역 선택
+    let $sizeButton = $("#size-font"); // 버튼 선택
+
+    let isLargeFont = false; // 글자가 확대되었는지 여부를 추적하는 변수
+    let normalFontSize = 1.1; // 기본 폰트 크기 설정
+    let largeFontSize = 1.5; // 확대된 폰트 크기 설정
+
+    $sizeButton.on("click", function() {     
+        if (isLargeFont) {
+            $content.css("font-size", normalFontSize + "em"); // 글자 크기를 기본 크기로 설정
+            $sizeButton.text("A"); // 버튼 텍스트를 "A"로 변경
+            isLargeFont = false; // 상태를 토글
+        } else {
+            $content.css("font-size", largeFontSize + "em"); // 글자 크기를 확대된 크기로 설정
+            $sizeButton.text("a"); // 버튼 텍스트를 "a"로 변경
+            isLargeFont = true; // 상태를 토글
+        }
+    });
+
+    /* 댓글 */
+    // 답글 버튼 클릭 시 답글 목록 표시/숨기기
+    function toggleReplyForm(button) {
+        // button으로부터 가장 가까운 reply-form을 찾아서 보이거나 숨김 처리
+        var replyForm = button.parentElement.nextElementSibling;
+        if (replyForm.style.display === "none" || replyForm.style.display === "") {
+            replyForm.style.display = "block";
+        } else {
+            replyForm.style.display = "none";
+        }
+    }
+    
+    let userId = /*[[${userId}]]*/ '';  // 서버에서 전달된 userId를 가져옴
+    console.log("User ID:", userId);  // 콘솔에 userId 출력
+	
+    $("#commentSubmitBtn").on("click", function(event) {
+    	
+    	let content = $("#content").val().trim();
+    	
+        if (!userId || userId == '') {
+            alert("댓글을 작성하려면 로그인이 필요합니다.");
+            location.href = "/news/login";
+            return; 
+        } else if (content == '') { 
+        	event.preventDefault();  // 폼 제출을 방지
+
+        } else {
+           
+                $("#commentForm").submit(); 
+            
+        }
+    });
+
+
+	 // 모든 reply-submit-btn에 대해 클릭 이벤트 핸들러 설정
+	   $(".reply-submit-btn").on("click", function(event) {
+	    // 현재 클릭된 버튼이 속한 폼 내의 텍스트 영역 값을 가져옴
+	    let content = $(this).closest("form").find("textarea").val().trim();
+	    
+	    // 로그인 여부를 확인
+	    if (!userId || userId === '') {
+	        alert("댓글을 작성하려면 로그인이 필요합니다.");
+	        location.href = "/news/login";  // 로그인 페이지로 리다이렉트
+	        return; 
+	    } else if(content === '') {
+	        event.preventDefault();  // 폼 제출을 방지
+	    } else {
+	        // 클릭된 버튼의 부모 폼을 찾아서 제출
+	        $(this).closest("form").submit();
+	    }
+	});
+
+	   $(document).ready(function() {
+		    // 점 3개 버튼 클릭 시 수정 및 삭제 메뉴 토글
+		     $(".options-button").on("click", function(event) {
+		        event.stopPropagation(); // 이벤트 전파 방지
+		        let $optionsMenu = $(this).siblings(".options-menu"); // 옵션 메뉴 참조
+		        $(".options-menu").not($optionsMenu).hide(); // 다른 메뉴는 닫기
+		        $optionsMenu.toggle(); // 현재 메뉴 토글
+		    });
+
+		    // 다른 곳을 클릭하면 메뉴 숨김
+		    $(document).on("click", function() {
+		        $(".options-menu").hide();  // 메뉴 숨기기
+		    });
+
+		 // 수정 버튼 클릭 시 처리할 로직
+		    $(".edit-button").on("click", function() {
+		        let $comment = $(this).closest(".reply, .daegul");  // 대댓글 또는 댓글을 선택
+		        let num = $comment.data("comment-num");  // 댓글 또는 대댓글의 고유 번호 가져오기
+		        let currentContent = $comment.find(".comment-content").text().trim(); // 현재 댓글 내용을 가져옴
+
+		        // 기존의 댓글 내용을 숨김
+		        $comment.find(".comment-content").hide();
+
+		        // 댓글 작성 폼을 생성
+		        let editForm = `
+		            <div class="edit-form" style="text-align: right;">
+		                <textarea class="form-control edit-textarea" rows="3">${currentContent}</textarea>
+		                <button class="btn-primary save-edit-btn">저장</button>
+		                <button class="btn-primary cancel-edit-btn">취소</button>
+		            </div>
+		        `;
+
+		        // 댓글 작성 폼을 댓글 내용 자리에 추가
+		        $comment.find(".comment-actions").before(editForm);
+
+		        // 저장 버튼 클릭 시 처리할 로직
+		        $comment.find(".save-edit-btn").on("click", function() {
+		            let updatedContent = $(this).siblings(".edit-textarea").val().trim();
+
+		            // 서버에 수정된 내용을 저장하도록 요청 (AJAX)
+		            $.ajax({
+		                url: '/news/edit',  // 서버의 댓글 수정 처리 URL
+		                type: 'POST',
+		                data: JSON.stringify({num: num, content: updatedContent}),
+		                contentType: 'application/json; charset=utf-8',
+		                success: function(response) {
+		                    if (response.param === "success") {
+		                        // 댓글 내용을 수정된 내용으로 업데이트
+		                        $comment.find(".comment-content").text(updatedContent).show();
+		                        $comment.find(".edit-form").remove();  // 폼 제거
+		                        alert("댓글이 성공적으로 수정되었습니다.");
+		                        location.reload();  // 페이지 새로고침
+		                    } else {
+		                        alert("댓글 수정에 실패했습니다.");
+		                    }
+		                },
+		                error: function() {
+		                    alert("댓글 수정 중 오류가 발생했습니다.");
+		                }
+		            });
+		        });
+
+		        // 취소 버튼 클릭 시 처리할 로직
+		        $comment.find(".cancel-edit-btn").on("click", function() {
+		            // 폼을 제거하고 원래 댓글 내용을 다시 표시
+		            $comment.find(".edit-form").remove();
+		            $comment.find(".comment-content").show();
+		        });
+		    });
+		 
+		    // 삭제 버튼 클릭 시 처리할 로직
+		    $(".delete-button").on("click", function() {
+		        if (confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
+		            // 삭제할 댓글의 num를 가져옴
+		             let $comment = $(this).closest(".reply, .daegul");  // 대댓글 또는 댓글을 선택
+           			 let num = $comment.data("comment-num");
+
+		            // Ajax를 통해 서버로 삭제 요청 전송
+		            $.ajax({
+		                url: '/news/delete',  // 서버의 댓글 삭제 처리 URL
+		                type: 'POST',
+		                data: JSON.stringify({num:num}),
+		                contentType: 'application/json; charset=utf-8',
+		                success: function(response) {
+		                    if (response.param === "success") {
+		                        // 성공적으로 삭제되면 UI에서 댓글 제거
+		                        $comment.remove();
+		                        alert("댓글이 성공적으로 삭제되었습니다.");
+		                        location.reload();  // 페이지 새로고침
+		                        
+		                    } else {
+		                        alert("댓글 삭제에 실패했습니다.");
+		                    }
+		                }
+		                
+		            });
+		        }
+		    });
+		});
+	
+
+    function saveNews(f) {
+        let newsId = f.getAttribute('data-id');
+        console.log('News ID:', newsId);  // 콘솔에 ID 값 출력
+        window.location.href = '/news/detail/' + newsId;
+    }
+</script>
+</body>
+</html>

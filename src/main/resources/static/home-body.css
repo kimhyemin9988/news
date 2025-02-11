@@ -1,0 +1,276 @@
+@charset "UTF-8";
+
+/* Body 컨테이너 스타일 */
+.body-top {
+    height: 500px;    
+    display: flex;   
+    gap: 30px;
+    padding: 10px 80px; 
+}
+
+.body-content {
+    padding: 0 40px 0 60px; /* 전체 콘텐츠 좌우 여백 설정 */
+}
+
+/* 큰 박스 스타일 */
+.big-box {
+    flex: 2;
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    height: 100%;
+    aspect-ratio: 3/2;
+}
+
+.big-box .box {
+    width: 100%;
+    height: calc(100% - 20px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.big-box-img {
+    width: 400px;
+    height: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.big-box-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 작은 박스 컨테이너 및 스타일 */
+.small-box-container {
+    flex: 5;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2개의 열을 동일한 비율로 설정 */
+    grid-template-rows: repeat(3, auto); /* 3개의 행으로 구성 */
+    gap: 20px; /* 박스 사이의 간격 설정 */
+    height: calc(100% - 20px);
+}
+
+.small-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.small-box-img {
+    width: 150px;
+    height: 100px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-right: 20px;
+}
+
+.small-box-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.box-text {
+    flex: 1;
+    margin-right: 20px; /* 텍스트와 이미지 사이의 여백 추가 */
+}
+
+/* 텍스트 스타일 */
+.box h2 {
+    margin: 10px 0;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.box h2:hover {
+    text-decoration: underline;
+    text-decoration-color: black; /* 하이라이트 시 검은색 밑줄 */
+}
+
+.box p {
+    margin: 5px 0;
+    font-size: 0.9em;
+} 
+
+.box a {
+    margin: 5px 0;
+    font-size: 0.8em;
+    color: gray;
+}
+
+/* 구독 섹션 스타일 */
+.body-subscribe {
+    flex: 6;
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    height: 120px;
+    gap: 80px; /* 구독 상자들 사이의 간격 설정 */
+    margin-bottom: 20px;
+}
+
+.sub-box {
+    width: 80px;
+    display: flex;
+    flex-direction: column; /* 이미지와 버튼을 세로로 배치 */
+    align-items: center; /* 중앙 정렬 */
+    justify-content: space-between; /* 이미지와 버튼 사이의 공간 확보 */
+    overflow: hidden;
+}
+
+.sub-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    border-radius: 10px; /* 모퉁이 둥글게 */
+}
+
+.subscribe-button {
+    width: 70%;
+    padding: 5px;
+    font-size: 0.8em;
+    background-color: #f1f1f1; /* 버튼 배경색 설정 */
+    color: black; /* 버튼 텍스트 색상 설정 */
+    border: none; /* 버튼 테두리 제거 */
+    border-radius: 20px; /* 버튼 모서리 둥글게 */
+    cursor: pointer; /* 커서 모양 변경 */
+}
+
+.subscribe-button:hover {
+    background-color: #ddd; /* 호버 시 버튼 배경색 변경 */
+}
+
+.subscribed-channels-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden; /* 전체 컨테이너에서 오버플로우 숨김 */
+}
+
+.subscribed-channels {
+    display: flex;
+    gap: 10px; /* 요소 간의 간격 */
+    margin: 0 40px;
+    padding: 10px 0;
+    width: 100%;
+    overflow: hidden; /* 스크롤 바 숨김 */
+}
+
+#subscribed-list {
+    display: flex;
+    transition: transform 0.3s ease; /* 부드러운 이동 효과 */
+}
+
+.subscribed-channel {
+    display: flex;
+    flex-direction: column; /* 뉴스 항목이 이미지와 이름 아래에 배치되도록 */
+    align-items: flex-start; /* 채널 이미지와 이름을 왼쪽 정렬 */
+    width: 350px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+.subscribed-channel-header {
+    display: flex;
+    align-items: center; /* 이미지와 이름을 수평으로 정렬 */
+    margin:10px; /* 뉴스 타이틀과의 간격 */
+}
+.subscribed-channel img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin:0 10px 10px 0;/* 이미지 아래에 간격 추가 */
+    
+}
+
+.scroll-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.scroll-button.left {
+    left: 0;
+}
+
+.scroll-button.right {
+    right: 0;
+}
+
+.scroll-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.subscribed-channel span {
+    font-weight: bold;
+    margin-bottom: 10px; /* 채널 이름 아래에 간격 추가 */
+}
+
+.channel-news {
+    width: 100%; /* 뉴스 항목이 채널 넓이를 채우도록 설정 */
+    text-align: left; /* 뉴스 타이틀이 왼쪽 정렬되도록 설정 */
+    
+}
+.news-item-container{
+	display: flex;
+    justify-content: space-between;	
+}
+.news-item {
+    margin: 10px 0;
+    border-top: 1px solid #dadada;
+}
+
+.news-item h4 {
+    margin: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    color: gray;
+}
+.news-item h4:hover {
+    text-decoration: underline;
+    text-decoration-color: black; /* 하이라이트 시 검은색 밑줄 */
+}
+
+.news-item-vertical {
+	flex:1;
+	width:150px;
+    display: flex;
+    flex-direction: column; /* 이미지 아래에 타이틀 배치 */
+    align-items: center;
+    text-align: left;
+	margin-left: 10px;
+	
+}
+
+.news-item-vertical h4{
+	font-size: 1em;
+    cursor: pointer;
+    color: gray;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+.news-item-vertical h4:hover {
+    text-decoration: underline;
+    text-decoration-color: black; /* 하이라이트 시 검은색 밑줄 */
+}
+
+      
+
+        
+       

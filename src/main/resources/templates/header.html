@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>header</title>
+	<link rel="stylesheet" th:href="@{/home-header.css}">
+</head>
+<body>
+	<div id="header" th:fragment="headerFragment">
+		<hr class="line">
+        <div class="header-top">
+            <div class="h-left">
+                <span th:text="${currentDate}"></span>
+            </div>
+            <div class="h-center">
+                <div class="logo-box">
+                    <span class="logo-text">Y</span>
+                    <span class="logo-text">K</span>
+                    <span class="logo-text">P</span>
+                </div>
+            </div>
+            <div class="h-right">
+                <!-- 사용자가 로그인하지 않았을 때 -->
+                <div th:if="${#strings.isEmpty(userId)}">
+                    <a href="/news/login" class="link">로그인</a>
+                    <a href="/news/register" class="link">회원가입</a>
+                </div>
+                <!-- 사용자가 로그인했을 때 -->
+                <div th:if="${!#strings.isEmpty(userId)}">
+                    <span>Hi, <span th:text="${userId}"></span></span>
+                    <a href="/news/logout" class="link">로그아웃</a>
+                </div>
+            </div>
+        </div>
+        <hr class="line">
+        <div class="header-center">
+            <div class="center">
+                <img src="/img/2024logo.gif" class="img">
+            </div>
+        </div>
+    
+    <hr class="line">
+    <div class="header-bottom">
+        <nav class="menu-bar">
+            <a href="/news/home" class="menu-link">정치</a>
+            <a href="/news/home#economy-section" class="menu-link">경제</a>
+            <a href="/news/home#society-section" class="menu-link">사회</a>
+            <a href="/news/home#culture-section" class="menu-link">문화</a>
+            <a href="/news/home#entertainment-section" class="menu-link">연예</a>
+<!--            <a href="/news/weather" class="menu-link">날씨</a>-->
+        </nav>
+    </div>
+	</div>
+</body>
+</html>

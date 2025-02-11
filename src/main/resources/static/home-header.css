@@ -1,0 +1,130 @@
+@charset "UTF-8";
+/*줄*/
+.line {
+    width: calc(100% - 40px); /* 전체 너비에서 좌우 공백을 제외한 너비 */
+    height: 2px;
+    background-color: black;
+    margin: 5px auto; /* 위아래 5px, 좌우 자동으로 중앙 정렬 */
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between; /* 자식 요소들을 좌우로 배치 */
+    align-items: center;
+    padding: 0 30px; /* 위아래 0, 좌우 30px */
+}
+
+.header-top .h-left {
+    flex: 1; /* 1:1:1 크기*/
+    display: flex; /* 왼쪽 컨테이너 */
+    justify-content: left; /* 왼쪽 정렬 */
+}
+
+.header-top .h-center {
+    flex: 1; /* 1:1:1 크기*/
+    display: flex; /* 중앙 컨테이너로  */
+    justify-content: center; /* 중앙 정렬 */
+}
+
+.header-top .h-right {
+
+    flex: 1; /* 1:1:1 크기 */
+    display: flex; /* 오른쪽 플렉스 컨테이너로  */
+    justify-content: right; /* 오른쪽 정렬 */
+} 
+
+/* 중앙 Y K P */
+.logo-box {
+	
+    display: flex; /* 네모 박스들을 수평으로 정렬 */
+    justify-content: center; /* 네모 박스들을 중앙 정렬 */
+    gap: 10px; /* 네모 박스들 사이의 간격 설정 */
+}
+
+.logo-text {
+    background-color: black; /* 네모 박스의 배경색 */
+    padding: 1px 5px; /* 네모 박스 내부 여백 설정 */
+    color: white; /* 텍스트 색상 */
+    font-size: 24px; /* 텍스트 크기 설정 */
+    font-weight: bold; /* 텍스트를 굵게 설정 */
+    display: inline-block; /* 네모 박스를 인라인 블록으로 설정 */
+    text-align: center; /* 텍스트를 네모 박스의 중앙에 정렬 */
+}
+ 
+ /* 로그인 / 회원가입 */
+.header-top .link {
+    margin-left: 10px; /* 링크 사이에 여백 추가 */
+    padding: 5px 0;
+    font-size: 16px;
+    text-decoration: none; /* 기본 밑줄 제거 */
+    color: black;
+    position: relative;
+}
+
+/* 줄 효과 시작 */
+.header-top .link::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: black;
+    transition: width .3s;
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+}
+
+/* 줄 효과 끝 */
+.header-top .link:hover::after {
+    width: 100%;
+}
+
+/* 2024 Today's news 이미지*/
+.header-center {
+    display: flex;
+    justify-content: center; /* 이미지가 가로 중앙에 정렬되도록 설정 */    
+}
+
+.header-center .center {
+    display: flex;
+    align-items: center;   
+}
+
+.img {
+    max-width: 100%; /* 이미지가 부모 컨테이너를 넘지 않도록 설정 */
+    height: auto; /* 이미지의 높이를 자동으로 설정 */   
+}
+
+/* 뉴스 / 연예 / 스포치 / 날씨 */
+.menu-bar {
+    display: flex; /* 메뉴 항목들을 수평으로 정렬 */
+    justify-content: center; /* 중앙 정렬 */
+    gap: 50px; /* 메뉴 항목들 사이의 간격 설정 */
+    padding: 5px 0; /* 메뉴바 상하 여백 설정 */
+}
+
+.menu-link {
+    text-decoration: none; /* 기본 밑줄 제거 */
+    color: black; /* 텍스트 색상 설정 */
+    font-weight: bold; /* 텍스트를 굵게 설정 */
+    font-size: 18px; /* 폰트 크기 설정 */
+    position: relative; /* 상대 위치 설정 */
+    padding: 5px 0; /* 상하 여백 설정 */
+    font-family: '돋움', 'Dotum', 'Arial', sans-serif; /* 폰트 패밀리 설정 */
+}
+
+.menu-link::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: black;
+    transition: width .3s;
+    position: absolute;
+    left: 0;
+    bottom: -2px; /* 텍스트 아래에 위치하도록 설정 */
+}
+
+.menu-link:hover::after {
+    width: 100%; /* 호버 시 전체 너비로 확장 */
+}

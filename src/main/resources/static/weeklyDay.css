@@ -1,0 +1,23 @@
+.day_data{
+	background-color: white;
+	 border-radius: 10px;
+	 position: relative;
+	 box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4);
+	 width: 60%;
+	 padding: 1%;
+	 display: flex;
+	 align-items: flex-start;
+	 margin: 3rem;
+	 height: fit-content;
+	 align-self: baseline;
+	 flex-direction: row;
+}
+
+.weely_container{
+	display: flex;
+}
+
+
+.cell_weather{
+	display: flex;
+}

@@ -1,0 +1,106 @@
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  margin-left: 16px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+
+html {
+  height: 100%;
+  line-height: 2;
+}
+
+
+#content{
+    width: 1160px;
+    margin: 0 auto;
+    padding: 0;
+}
+body{
+	margin:0;
+}
+
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+a{
+    color: inherit;
+    text-decoration: none;
+}
+
+main{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background-size: 100% 100%;
+	align-items: center;
+	--swiper-navigation-size: 22px;
+}
+
+#main_content {
+  grid-area: main_content;
+}
+
+#weatherGraph {
+  grid-area: weatherGraph;
+}
+
+#weatherMap {
+  grid-area: weatherMap;
+}
+
+
+#main_div {
+	padding-left: 20vh;
+	padding-right: 20vh;
+  display: grid;
+  grid-template-areas:
+    "main_content weatherMap"
+    "weatherGraph  weatherMap";
+	    align-items: start;
+	grid-template-columns: 1fr 0.8fr;
+}

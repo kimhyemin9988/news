@@ -1,0 +1,296 @@
+@charset "UTF-8";
+.container{
+	display: flex;
+	gap:20px;
+	padding:20px;
+	justify-content: center; 
+	align-items: flex-start;	
+} 
+.detail-box-left{
+	display:flex;
+	width:700px;
+	flex-direction: column;
+	align-items: flex-start;
+	gap:20px;
+}
+.detail-top{
+	padding:20px;
+	border: 1px solid #dadada;
+}
+
+.detail-box-right{
+	width:300px;
+   	border: 1px solid #dadada;
+   	flex-direction: column;
+	align-items: flex-start;
+	padding:20px;
+   	gap:20px;
+   	height: auto;
+   	display: inline-block;  
+}
+.detail-line{
+	margin:5px auto;
+	background-color: #dadada;
+}
+.detail-top img{
+	width: 100%;
+	margin-bottom: 20px;
+}
+.detail-summary{
+	font-size:1.1em;
+	text-align: justify;
+	line-height: 1.5em;	
+}
+
+.small-box{
+	display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding:10px 0;
+   	border-bottom: 1px solid #dadada;
+   	height: auto; 
+}
+.small-box-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.small-box-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.box-text {
+    flex: 1;
+    font-size: 0.6em;
+
+}
+.box-text h2  {
+    margin: 10px 0;
+    font-size: 1.8em; 
+	cursor:pointer
+}
+.box-text h2:hover {
+    text-decoration: underline;
+    text-decoration-color: black; 
+}
+
+/*댓글*/
+.comments-section {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    border: 1px solid #dadada;
+    background-color: #ffffff; /* 배경색 추가 */
+    box-sizing: border-box; /* 패딩을 포함하여 너비 계산 */
+}
+
+.comment, .reply {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.comment-author {
+    font-weight: bold;
+    color: #333;
+}
+
+.comment-date {
+    font-size: 0.9em;
+    color: #999;
+}
+
+.comment-content {
+    margin-bottom: 10px;
+    line-height: 1.6;
+    color: #444;
+}
+
+.comment-actions {
+    font-size: 0.9em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.reply-button {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    padding: 0;
+    font-size: 0.9em;
+}
+
+.reply-button:hover {
+    text-decoration: underline;
+}
+
+.reply-form {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+}
+.reply-form textarea {
+    width: 100%;
+    height: 60px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    margin-bottom: 10px;
+    resize: none;
+    box-sizing: border-box;
+}
+.replies {
+    margin-top: 10px;
+    
+}
+
+.reply {
+    background-color: #f1f1f1;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    
+}
+
+.reply .comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.reply .comment-content {
+    margin-bottom: 5px;
+    line-height: 1.6;
+    color: #444;
+}
+/* 점3개 */
+.comment-options {
+    position: relative;
+    display: inline-block;
+}
+
+.options-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #999;
+}
+
+.options-menu {
+	width:50px;
+    position: absolute;
+    right: 0;
+    top: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    z-index: 100;
+}
+
+.options-menu button {
+    background: none;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: #333;
+    font-size: 0.9em;
+    width: 100%; /* 버튼을 부모 요소의 너비에 맞춤 */
+    text-align: left; /* 텍스트를 왼쪽으로 정렬 */
+}
+
+
+.options-menu button:hover {
+    background-color: #f0f0f0;
+}
+
+
+.comment-form {
+    padding: 15px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+}
+
+.form-control {
+    width: 100%;
+    height: 60px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    margin-bottom: 10px;
+    resize: none;
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #50af55;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9em;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #387a3c;
+}
+
+
+    
+/* 폰트크기 */
+.text-controls {
+   margin-top: 10px;
+   display: flex;
+   gap: 10px;    
+}
+
+.btn-control {
+    margin-left: auto;
+    background-color: transparent; /* 배경색을 투명하게 설정 */
+    color: #50af55; /* 텍스트 색상 */
+    border: none; /* 테두리 제거 */
+    border-radius: 50%; /* 모서리를 둥글게 설정 */
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-control:hover {
+    background-color: #50af55;
+    color:white;
+}
+.btn-link {
+	margin-top: 5px;
+}
+
+.btn-link img {
+    width: 18px;
+    height: auto;
+   
+}
+
+
+
+          

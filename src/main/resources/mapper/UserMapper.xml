@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korea.news.mapper.UserMapper">
+	<select id="loginCheck">
+		SELECT * FROM REGISTER where USERID=#{userid}
+	</select>
+	<select id="idCheck">
+		SELECT * FROM REGISTER where USERID=#{userid}
+	</select>
+	<insert id="insert">
+	INSERT INTO REGISTER VALUES(
+		SEQ_REGISTER_IDX.NEXTVAL,
+		#{userid},
+		#{email},
+		#{pwd}
+	)
+	</insert>
+</mapper>

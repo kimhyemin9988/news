@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/authContent.css}">
+    <link rel="stylesheet" th:href="@{/home-header.css}">
+    <link rel="stylesheet" th:href="@{/home-body.css}">
+</head>
+<body>
+    <div th:replace="~{header::headerFragment}"></div>
+    
+    <main style="display: flex; justify-content: center;">
+        <form class="auth_content" th:action="@{/news/access}" th:object="${vo}" method="post">
+            <div class="title_div">
+                <span class="title_span">로그인 하기</span>
+            </div>
+            <div class="title_div">
+                <div class="auth_form">
+                    <input th:field="*{userid}" type="text" class="input_style" placeholder="아이디를 입력하세요." id="userid">
+                    <input th:field="*{pwd}" type="password" class="input_style" placeholder="비밀번호를 입력하세요." id="pwd">
+                </div>
+                <button class="auth_btn" id="login" type="button">로그인</button>
+            </div>
+            <hr>
+            <div class="title_div">
+                <button class="large_btn" id="register" type="button">회원 가입</button>
+                <button class="large_btn" id="find_password" type="button">비밀번호 찾기</button>
+            </div>
+        </form>
+    </main>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script th:inline="javascript">
+    
+        $("#login").on("click", function(){
+            let $id = $("#userid").val();
+            let $pwd = $("#pwd").val();
+            
+            if($id == ''){
+                alert('아이디를 입력하세요');
+                return;
+            }
+            
+            if($pwd == ''){
+                alert('비밀번호를 입력하세요');
+                return;
+            }
+            
+            $.ajax({
+                url:"/news/access",
+                type:"POST",
+                data : JSON.stringify({userid : $id , pwd : $pwd}),
+                dataType : 'json',
+                contentType : 'application/json; charset=utf-8',
+                success : function(data){
+                    if(data["param"] == 'no'){
+                        alert('아이디나 비밀번호가 틀렸습니다.');
+                        return;
+                    } else if(data["param"] == 'yes'){
+                        alert('로그인 성공');
+                        location.href="/news/home";
+                    } else{
+                        alert('에러발생');
+                        return;
+                    }
+                }
+            });
+        });
+        
+        /* 회원가입 */
+        $("#register").on("click",function(){
+            location.href="/news/register";
+        });
+</script>
+</html>

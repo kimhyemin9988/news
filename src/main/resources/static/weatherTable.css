@@ -1,0 +1,52 @@
+.weather_table_list{
+	font-size: 20px;
+}
+
+dt{
+	margin-right: 10px;
+	color:darkgray
+}
+
+.icon_bt{
+	margin:10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+
+table{
+	width: 100%;
+}
+
+.swiper {
+  width: 600px;
+  height: 300px;
+}
+
+
+
+#scroll_left{
+	width: 80%;
+}
+
+.swiper-wrapper{
+	transition-duration:500ms;
+}
+
+
+
+.swiper-button-prev, .swiper-button-next{
+	 background-color: #ffffff;
+	 border-radius: 0.3rem;
+	 font-weight: 900;
+	 border: 1px solid white;
+	 margin: 20px;
+	 width: 50px;
+	 height: 50px;
+	 box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2);
+	 color: black;
+}
+
+

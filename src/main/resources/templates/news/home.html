@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>YKP</title>
+    <link rel="stylesheet" th:href="@{/home-header.css}">
+    <link rel="stylesheet" th:href="@{/home-body.css}">
+</head>
+<body>
+	<!-- Header -->
+    <div th:replace="~{header::headerFragment}"></div>
+    
+    <!-- Main Content -->
+    <div class="body-top">
+        <div class="big-box">
+            <div class="box" th:if="${politics.size() > 0}" th:with="news=${politics.get(0)}">
+                <div class="big-box-img">
+                    <img th:src="${news.imageUrl}" alt="이미지">
+                </div>
+                <h2 onclick="saveNews(this)" th:attr="data-id=${news.id}" th:text="${news.title.length() > 50 ? news.title.substring(0, 50) + '...' : news.title}">제목</h2>
+                <p th:text="${news.summary.length() > 200 ? news.summary.substring(0, 200) + '...' : news.summary}">요약</p>
+                <a th:text="${news.publishedAtAgo}">발행일</a>
+            </div>
+        </div>
+        <div class="small-box-container">
+            <div class="box" th:each="news, iterStat : ${politics}" th:if="${iterStat.index > 0 && iterStat.index < 7}">
+                <h2 onclick="saveNews(this)" th:attr="data-id=${news.id}" th:text="${news.title.length() > 50 ? news.title.substring(0, 50) + '...' : news.title}">제목</h2>
+                <p th:text="${news.summary.length() > 80 ? news.summary.substring(0, 80) + '...' : news.summary}">요약</p>
+                <a th:text="${news.publishedAtAgo}">발행일</a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="line">
+    
+    <div class="body-content">
+    <h2>구독</h2>
+</div>
+
+<div class="body-subscribe">
+    <div class="sub-box" th:each="channel : ${channels}">
+        <img th:src="@{'/img/' + ${channel.image}}" alt="Channel Image">
+        <button class="subscribe-button" th:data-channel-name="${channel.name}" 
+                th:data-channel-image="${channel.image}" th:text="'구독'">구독</button>
+    </div>
+</div>
+
+
+<!-- 구독된 채널을 표시할 영역 -->
+<div class="subscribed-channels-container">
+    <button class="scroll-button left">&lt;</button>
+    <div class="subscribed-channels">
+        <div id="subscribed-list">
+            <div th:each="channel : ${subscribedChannels}">
+                <div class="subscribed-channel" th:data-channel-name="${channel.name}">
+                    <!-- 채널 이미지와 이름을 가로로 배치 -->
+                    <div class="subscribed-channel-header">
+                        <img th:src="@{'/img/' + ${channel.image}}" alt="Channel Image">
+                        <span th:text="${channel.name}"></span>
+                    </div>
+
+                    <!-- 가져온 데이터를 HTML 요소로 추가 -->
+                    <div class="channel-news">
+                        <!-- 뉴스 항목을 가로로 배치 -->
+                        <div class="news-item-container" style="display: flex;">
+                            <div th:each="newsItem, iterStat : ${channel.relatedNews}">
+                                <!-- 첫 번째와 두 번째 뉴스: 이미지와 타이틀 표시 -->
+                                <div class="news-item-vertical" th:if="${iterStat.index < 2}" style="text-align: center;">
+                                    <img th:src="${newsItem.imageUrl}" th:alt="${newsItem.title}" style="width:150px; height:100px; border-radius:10px;">
+                                    <h4 onclick="saveNews(this)" th:attr="data-id=${newsItem.id}" style="margin-bottom: 10px;"
+                                        th:text="${newsItem.title.length() > 20 ? newsItem.title.substring(0, 20) + '...' : newsItem.title}">
+                                        제목
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 나머지 뉴스: 타이틀만 표시 -->
+                        <div class="news-item-container" style="display: flex; flex-direction: column; ">
+                            <div th:each="newsItem, iterStat : ${channel.relatedNews}" th:if="${iterStat.index >= 2 && iterStat.index < 6}">
+                                <div class="news-item" style="margin: 0px;">
+                                    <h4 onclick="saveNews(this)" th:attr="data-id=${newsItem.id}" 
+                                        th:text="${newsItem.title.length() > 20 ? newsItem.title.substring(0, 20) + '...' : newsItem.title}">
+                                        제목
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- .channel-news -->
+                </div> <!-- .subscribed-channel -->
+            </div> <!-- .each channel -->
+        </div> <!-- #subscribed-list -->
+    </div> <!-- .subscribed-channels -->
+    <button class="scroll-button right">&gt;</button>
+</div> <!-- .subscribed-channels-container -->
+
+
+
+    
+   
+		
+
+    
+	<!-- 뉴스가 표시될 컨테이너 -->
+	<div id="publisher-container"></div>
+   
+    <hr class="line">
+
+    <!-- News Sections -->
+    <div class="body-content" id="economy-section">
+        <h2>경제</h2>
+        <div class="small-box-container">
+            <div class="box" th:each="news, iterStat : ${economy}" th:if="${iterStat.index < 6}">
+                <div class="small-box">
+                    <div class="small-box-img">
+                        <img th:src="${news.imageUrl}" alt="이미지">
+                    </div>
+                    <div class="box-text">
+                        <h2 onclick="saveNews(this)" th:attr="data-id=${news.id}" th:text="${news.title.length() > 50 ? news.title.substring(0, 50) + '...' : news.title}">제목</h2>
+                        <p th:text="${news.summary.length() > 100 ? news.summary.substring(0, 100) + '...' : news.summary}">요약</p>
+                        <a th:text="${news.publishedAtAgo}">발행일</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="line">
+
+	<div class="body-content" id="society-section">
+        <h2>사회</h2>
+        <div class="small-box-container">
+            <div class="box" th:each="news, iterStat : ${society}" th:if="${iterStat.index < 6}">
+                <div class="small-box">
+                    <div class="small-box-img">
+                        <img th:src="${news.imageUrl}" alt="이미지">
+                    </div>
+                    <div class="box-text">
+                        <h2 onclick="saveNews(this)" th:attr="data-id=${news.id}" th:text="${news.title.length() > 50 ? news.title.substring(0, 50) + '...' : news.title}">제목</h2>
+                        <p th:text="${news.summary.length() > 100 ? news.summary.substring(0, 100) + '...' : news.summary}">요약</p>
+                        <a th:text="${news.publishedAtAgo}">발행일</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="line">
+    
+    <div class="body-content" id="culture-section">
+        <h2>문화</h2>
+        <div class="small-box-container">
+            <div class="box" th:each="news, iterStat : ${culture}" th:if="${iterStat.index < 6}">
+                <div class="small-box">
+                    <div class="small-box-img">
+                        <img th:src="${news.imageUrl}" alt="이미지">
+                    </div>
+                    <div class="box-text">
+                        <h2 onclick="saveNews(this)" th:attr="data-id=${news.id}" th:text="${news.title.length() > 50 ? news.title.substring(0, 50) + '...' : news.title}">제목</h2>
+                        <p th:text="${news.summary.length() > 100 ? news.summary.substring(0, 100) + '...' : news.summary}">요약</p>
+                        <a th:text="${news.publishedAtAgo}">발행일</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="line">
+    
+    <div class="body-content" id="entertainment-section">
+        <h2>연예</h2>
+        <div class="small-box-container">
+            <div class="box" th:each="news, iterStat : ${entertainment}" th:if="${iterStat.index < 6}">
+                <div class="small-box">
+                    <div class="small-box-img">
+                        <img th:src="${news.imageUrl}" alt="이미지">
+                    </div>
+                    <div class="box-text">
+                        <h2 onclick="saveNews(this)" th:attr="data-id=${news.id}" th:text="${news.title.length() > 50 ? news.title.substring(0, 50) + '...' : news.title}">제목</h2>
+                        <p th:text="${news.summary.length() > 100 ? news.summary.substring(0, 100) + '...' : news.summary}">요약</p>
+                        <a th:text="${news.publishedAtAgo}">발행일</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script th:inline="javascript">
+	function saveNews(f) {
+	    let newsId = f.getAttribute('data-id');
+	    console.log('News ID:', newsId);  // 콘솔에 ID 값 출력
+	    window.location.href = '/news/detail/' + newsId;	
+	}
+	 
+     
+	
+	    let currentScrollPosition = 0;
+	    const scrollAmount = 350; // 한 번에 이동할 너비
+
+	 // 페이지 로드 시 구독 중인 채널의 버튼 상태를 '구독중'으로 설정
+	    const subscribedChannels = /*[[${subscribedChannelNames}]]*/ [];
+
+	    $('.subscribe-button').each(function() {
+	        const channelName = $(this).data('channel-name');
+	        if (Array.isArray(subscribedChannels) && subscribedChannels.includes(channelName)) {
+	            $(this).text('구독중');
+	        }
+	    });
+
+	    $('.subscribe-button').click(function() {
+	        const channelName = $(this).data('channel-name');
+	        const channelImage = $(this).data('channel-image');
+	        const button = $(this); // 현재 버튼을 변수에 저장
+
+	        // 로그인 여부 확인 및 userIdx 가져오기
+	        const userId = /*[[${userId}]]*/ '';
+	        const userIdx = /*[[${userIdx}]]*/'';
+
+
+	        if (userId === null) {
+	            // 로그인되지 않은 경우 경고창을 표시하고 로그인 페이지로 이동
+	            alert('구독하려면 로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+	            window.location.href = '/news/login';
+	            return; // 더 이상의 동작을 막음
+	        }
+
+	        // 이미 구독된 채널인지 확인
+	        const existingChannel = $(`#subscribed-list [data-channel-name="${channelName}"]`);
+
+	        if (existingChannel.length) {
+	        	// 이미 구독 중이면 구독 취소 요청을 보냄
+	            $.ajax({
+	                url: '/news/unsubscribe', // 구독 취소 API 엔드포인트
+	                type: 'POST',
+	                data: {
+	                    channelName: channelName
+	                },
+	                success: function(response) {
+	                    // 구독 취소 성공 시 리스트에서 제거하고 버튼 텍스트 변경
+	                    existingChannel.remove();
+	                    button.text('구독'); // 버튼 텍스트를 "구독"으로 변경
+	                },
+	                error: function() {
+	                    alert('Failed to unsubscribe from the channel.');
+	                }
+	            });
+	        } else {
+	            // AJAX로 관련 데이터 가져오기
+	            $.ajax({
+	                url: '/news/subscribe', // 실제 서버의 API 엔드포인트로 변경
+	                type: 'POST',
+	                data: {
+	                    channelName: channelName
+	                },
+	                success: function(response) {
+	                    // 새로운 채널 추가
+	                    const newChannel = $('<div class="subscribed-channel">')
+	                        .attr('data-channel-name', channelName);
+
+	                    // 채널 이미지와 이름을 가로로 배치
+	                    const channelHeader = $('<div class="subscribed-channel-header">')
+	                        .append(`<img src="/img/${channelImage}" alt="${channelName} Image">`)
+	                        .append(`<span>${channelName}</span>`);
+
+	                    newChannel.append(channelHeader);
+
+	                    // 가져온 데이터를 HTML 요소로 추가
+	                    const newsData = $('<div class="channel-news">');
+	                    const newsItemContainer = $('<div class="news-item-container"></div>'); // 두 이미지를 가로로 배치할 컨테이너
+
+	                    if (response.news && response.news.length > 0) {
+	                        response.news.slice(0, 6).forEach((newsItem, index) => {
+	                            let title = newsItem.title;
+	                            if (title.length > 20) {
+	                                title = title.substring(0, 20) + '...';
+	                            }
+
+	                            // 첫 번째와 두 번째 뉴스는 가로로 배치하고 이미지 아래에 타이틀 추가
+	                            if (index === 0 || index === 1) {
+	                                const newsItemDiv = $(`
+	                                    <div class="news-item-vertical">
+	                                        <img src="${newsItem.imageUrl}" alt="${title}" style="width:150px; height:100px; border-radius:10px;">
+	                                        <h4 onclick="saveNews(this)" data-id="${newsItem.id}">${title}</h4>
+	                                    </div>
+	                                `);
+	                                newsItemContainer.append(newsItemDiv);
+	                            } else {
+	                                // 나머지 뉴스 항목은 이미지 없이 타이틀만 표시
+	                                newsData.append(`<div class="news-item"><h4 onclick="saveNews(this)" data-id="${newsItem.id}">${title}</h4></div>`);
+	                            }
+	                        });
+	                        newsData.prepend(newsItemContainer); // 첫 번째, 두 번째 뉴스 항목을 가진 컨테이너를 추가
+	                    } else {
+	                        newsData.append('<p>No news available for this channel.</p>');
+	                    }
+
+	                    newChannel.append(newsData);
+	                    $('#subscribed-list').append(newChannel);
+	                    button.text('구독중'); // 버튼 텍스트 변경
+
+	                    updateButtons();
+	                },
+	                error: function() {
+	                    alert('Failed to fetch data for the channel.');
+	                }
+	            });
+	        }
+	    });
+
+	    function updateButtons() {
+	        const maxScrollPosition = $('#subscribed-list').width() - $('.subscribed-channels').width();
+	        $('.scroll-button.left').prop('disabled', currentScrollPosition <= 0);
+	        $('.scroll-button.right').prop('disabled', currentScrollPosition >= maxScrollPosition);
+	    }
+
+	    $('.scroll-button.left').click(function() {
+	        if (currentScrollPosition > 0) {
+	            currentScrollPosition -= scrollAmount;
+	            $('#subscribed-list').css('transform', `translateX(-${currentScrollPosition}px)`);
+	        }
+	        updateButtons();
+	    });
+
+	    $('.scroll-button.right').click(function() {
+	        const maxScrollPosition = $('#subscribed-list').width() - $('.subscribed-channels').width();
+	        if (currentScrollPosition < maxScrollPosition) {
+	            currentScrollPosition += scrollAmount;
+	            $('#subscribed-list').css('transform', `translateX(-${currentScrollPosition}px)`);
+	        }
+	        updateButtons();
+	    });
+
+	    // 초기 버튼 상태 설정
+	    updateButtons();
+	
+
+
+
+</script>
+</html>
